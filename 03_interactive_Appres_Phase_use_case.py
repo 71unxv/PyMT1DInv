@@ -60,8 +60,8 @@ phase_all = [phase, phase2, phase3, phase4]
 
 # plt.ion()
 fig1 = plt.figure(num=1,figsize=(5,5))
-figManager = plt.get_current_fig_manager()
-figManager.window.showMaximized()
+mng = plt.get_current_fig_manager()
+mng.Maximize(True)
 
 plotAppres = fig1.add_subplot(2,2,1)
 plotPhase =  fig1.add_subplot(2,2,3)

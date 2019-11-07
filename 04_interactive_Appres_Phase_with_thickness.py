@@ -54,18 +54,19 @@ for i in range(len(frequency)):
     
 
 appres_all = [appres, appres2, appres3, appres4]
-
+resistivity_all = [resistivity, resistivity2, resistivity3, resistivity4]
 phase_all = [phase, phase2, phase3, phase4]
 
 
 # plt.ion()
 fig1 = plt.figure(num=1,figsize=(5,5))
+gs = fig1.add_gridspec(2, 2)
 figManager = plt.get_current_fig_manager()
 figManager.window.showMaximized()
 
-plotAppres = fig1.add_subplot(2,2,1)
-plotPhase =  fig1.add_subplot(2,2,3)
-
+plotAppres = fig1.add_subplot(gs[0,0])
+plotPhase =  fig1.add_subplot(gs[1,0])
+plotResistivity = fig1.add_subplot(gs[0:,1])
 # Appres_curve, = plotAppres.loglog(frequency,[])
 # Phase_curve, = plotPhase.loglog(frequency,[])
 
@@ -77,16 +78,22 @@ plotPhase =  fig1.add_subplot(2,2,3)
 
 plotAppres.loglog(frequency, appres_obs, '.r')
 plotPhase.loglog(frequency, phase_obs, '.r')
+plotResistivity.step(resistivity_obs, -np.cumsum(thickness), '-r')
+
 
 plt.ion()
 for i in range(len(appres_all)):
     if i == 0:
         Appres_curve, = plotAppres.loglog(frequency, appres_all[i])
         Phase_curve, = plotPhase.loglog(frequency, phase_all[i])
+        Resistivity_plot, = plotResistivity.step(resistivity_all[i], -np.cumsum(thickness), '-k')
+        
 
     else:
         Appres_curve.set_ydata(appres_all[i])
         Phase_curve.set_ydata(phase_all[i])
+        Resistivity_plot.set_xdata(resistivity_all[i])
+
     print(i)
     fig1.canvas.draw()
     plt.pause(0.5)
