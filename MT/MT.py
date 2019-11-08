@@ -2,15 +2,15 @@ import numpy as np
 
 class Model:
     
-    def __init__(self,thickness,resistivity):
+    def __init__(self ,resistivity, thickness):
         self.thickness = thickness
         self.resistivity = resistivity
     
     
 class Data:
-    def __init__(self, frequency,resistivity=0, phase=0,info = "pyMT1D"):
+    def __init__(self, frequency, appres=0, phase=0,info = "pyMT1D"):
         self.frequency = frequency
-        self.resistivity = resistivity
+        self.appres = appres
         self.phase = phase
         self.info = info
         
@@ -47,12 +47,30 @@ def forwardMT(resistivity, thickness, frequency):
     
     return apparentResistivity, phase
 
-def jacobianMT(resistivity, frequency, thickness=0):
-    if thickness==0:
-        
-        
-        
-        return J
-    else:
-        return J
-        
+
+def jacobianMT(frequency, resistivity, thickness, perturb_value=0.01):
+    if len(resistivity.shape) == 1:
+        resistivity = resistivity[:,None]
+
+    resistivity_temp = resistivity.copy()
+    appres = np.zeros(len(frequency))
+    phase = np.zeros(len(frequency))
+
+    for freq in range(len(frequency)):
+        appres[freq] ,phase[freq] = forwardMT(np.exp(resistivity), thickness, frequency[freq])
+
+    J_appres = np.zeros((len(frequency), len(resistivity)))
+    J_phase = np.zeros((len(frequency), len(resistivity)))
+
+    for i in range(len(resistivity)):
+
+        dm = resistivity[i] * perturb_value
+
+        resistivity_temp[i] = resistivity[i] + dm
+        for freq in range(len(frequency)):
+
+            appres_temp ,phase_temp = forwardMT(np.exp(resistivity_temp), thickness, frequency[freq])
+
+            J_appres[freq, i] = (np.log(appres[freq]) - np.log(appres_temp))/(dm)
+            J_phase[freq, i] = (np.log(phase[freq]) - np.log(phase_temp))/(dm)
+    return J_appres, J_phase

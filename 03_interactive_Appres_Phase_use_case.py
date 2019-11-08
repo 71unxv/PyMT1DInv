@@ -1,6 +1,6 @@
 import numpy as np 
 import matplotlib.pyplot as plt
-from MT import forwardMT
+from MT.MT import forwardMT
 
 frequency = np.logspace(-4,4,100)
 
@@ -60,8 +60,8 @@ phase_all = [phase, phase2, phase3, phase4]
 
 # plt.ion()
 fig1 = plt.figure(num=1,figsize=(5,5))
-mng = plt.get_current_fig_manager()
-mng.Maximize(True)
+# mng = plt.get_current_fig_manager()
+# mng.Maximize(True)
 
 plotAppres = fig1.add_subplot(2,2,1)
 plotPhase =  fig1.add_subplot(2,2,3)

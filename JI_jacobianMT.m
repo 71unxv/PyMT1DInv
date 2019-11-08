@@ -24,6 +24,7 @@ if tipe_inversi=='1D';
         end
     A = [A1];
 end
+
 % end
 % 
 % if tipe_inversi=='1.5D';

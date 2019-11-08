@@ -1,9 +1,9 @@
 import numpy as np 
 import matplotlib.pyplot as plt
-from MT import forwardMT
+from MT.MT import forwardMT
 
 frequency = np.logspace(-4,4,100)
-
+plt.ion()
 ### Model 1
 resistivity = np.array([100,200,20,1000,200])
 thickness = np.array([100,100,100,100,100])
@@ -81,8 +81,9 @@ plotPhase.loglog(frequency, phase_obs, '.r')
 plotResistivity.step(resistivity_obs, -np.cumsum(thickness), '-r')
 
 
-plt.ion()
+
 for i in range(len(appres_all)):
+    
     if i == 0:
         Appres_curve, = plotAppres.loglog(frequency, appres_all[i])
         Phase_curve, = plotPhase.loglog(frequency, phase_all[i])
@@ -97,11 +98,12 @@ for i in range(len(appres_all)):
     print(i)
     fig1.canvas.draw()
     plt.pause(0.5)
+plt.ioff()
+plt.show()
 
     
     
-plt.ioff()
-plt.show()
+
 
     
 # for appres_plot, phase_plot in zip(appres_all, phase_all):
