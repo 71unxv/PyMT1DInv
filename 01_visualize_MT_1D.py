@@ -1,6 +1,6 @@
 import numpy as np 
 import matplotlib.pyplot as plt
-from MT import forwardMT
+from MT.MT import forwardMT
 
 
 

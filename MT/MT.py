@@ -16,6 +16,7 @@ class Data:
         
 
 def forwardMT(resistivity, thickness, frequency):
+    
     mu = 4*np.pi *1E-7
     w = 2* np.pi*frequency
     nn = len(resistivity)
@@ -45,3 +46,13 @@ def forwardMT(resistivity, thickness, frequency):
     phase = np.arctan2(z.imag, z.real)
     
     return apparentResistivity, phase
+
+def jacobianMT(resistivity, frequency, thickness=0):
+    if thickness==0:
+        
+        
+        
+        return J
+    else:
+        return J
+        
